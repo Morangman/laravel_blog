@@ -31,6 +31,11 @@ class ArticleController extends Controller
         $users = User::all();
         return view('post', compact('posts','users'));
     }
+    
+    public function show_posts_comment(){
+        $posts = Post::all();
+        return view('comments', compact('posts'));
+    }
     //отображение постов на начальной странице
     public function show_posts_welcome(){
         $posts = Post::orderBy('created_at', 'desc')->get();

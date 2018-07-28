@@ -46,7 +46,7 @@
     }
     
     img {
-        width: 100%;
+        width: auto;
         height: auto;
     }
 
@@ -55,11 +55,17 @@
       .sidenav a {font-size: 18px;}
     }
     
+    @media screen and (min-width: 450px) {
+      #go-top {right: 45%; bottom: 5px;}
+    }
+    
+    
+    
     
     #go-top {
         position: fixed; 
         bottom: 25px; 
-        right: 70px;
+        right: 35px;
         text-align: center;
         cursor:pointer; 
         display:none;
@@ -87,41 +93,58 @@
     border-radius: 2px;
     background: rgb(245,245,245) linear-gradient(#f4f4f4, #f1f1f1);
     transition: all .218s ease 0s;
-  }
-  .nav-link:hover {
-    color: rgb(24,24,24);
-    border: 1px solid rgb(198,198,198);
-    background: #f7f7f7 linear-gradient(#f7f7f7, #f1f1f1);
-    box-shadow: 0 1px 2px rgba(0,0,0,.1);
-  }
-  .nav-link:active {
-    color: rgb(51,51,51);
-    border: 1px solid rgb(204,204,204);
-    background: rgb(238,238,238) linear-gradient(rgb(238,238,238), rgb(224,224,224));
-    box-shadow: 0 1px 2px rgba(0,0,0,.1) inset;
-  }
-  
-  .glyphicon-user{
-      font-size: 41.5px;
-      float: left;
-      margin-right: 15px;
-  }
-  .comment{
-      margin-bottom: 35px;
-  }
-  .created_at{
-      font-size: 12px;
-      font-style: italic;
-      color: #aaa;
-  }
-  
-  .comment-text{
-      clear: both;
-      margin-left: 56.5px;
-      font-size: 16px;
-      line-height: 1.3em;
-      
-  }
+    }
+    
+    .nav-link:hover {
+      color: rgb(24,24,24);
+      border: 1px solid rgb(198,198,198);
+      background: #f7f7f7 linear-gradient(#f7f7f7, #f1f1f1);
+      box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    }
+    .nav-link:active {
+      color: rgb(51,51,51);
+      border: 1px solid rgb(204,204,204);
+      background: rgb(238,238,238) linear-gradient(rgb(238,238,238), rgb(224,224,224));
+      box-shadow: 0 1px 2px rgba(0,0,0,.1) inset;
+    }
+    
+    #btn_add_comment{
+        margin-top: 7px; 
+        margin-bottom: 25px;
+    }
+    
+    #btn_edit_comment{
+        margin-left: 10px;
+    }
+
+    .author-image{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        float: left;
+        margin-right: 10px;
+    }
+    .comment{
+        margin-bottom: 35px;
+    }
+    .created_at{
+        font-size: 12px;
+        font-style: italic;
+        color: #aaa;
+    }
+
+    .comment-text{
+        clear: both;
+        margin-left: 60px;
+        font-size: 16px;
+        line-height: 1.3em;
+
+    }
+
+    .glyphicon-comment{
+        margin-right: 15px;
+        font-size: 25px;
+    }
   
 
 </style>

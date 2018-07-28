@@ -25,6 +25,7 @@ Route::get('/show_to_category/{posts}', 'CategoryController@show_category_by_id'
 
 Route::get('/show_post/{post}', 'ArticleController@show_post_by_id')->name('show_post');
 Route::post('/show_post/{post}', 'CommentController@store');
+Route::delete('/comments/{id}', 'CommentController@destroy');
 
 Route::get('/example', 'HomeController@getUserAgentLanguage');
 

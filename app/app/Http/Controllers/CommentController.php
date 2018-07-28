@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\AddCommentRequest;
 use App\Comment;
 use App\Post;
 
@@ -34,13 +35,13 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, int $id)
+    public function store(AddCommentRequest $request, int $id)
     {
         $post = Post::find($id);
         
         $comment = new Comment();
-        $comment->name = $request->input('name');
-        $comment->email = $request->input('email');
+        $comment->name = \Auth::user()->name;
+        $comment->email = \Auth::user()->email;
         $comment->comment = $request->input('comment');
         $comment->approved = true;
         $comment->post()->associate($post);
@@ -92,6 +93,9 @@ class CommentController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $comment = Comment::find($id);
+        $comment->delete();
+        return redirect ('/show_post/'.$comment->post->id);
     }
 }
