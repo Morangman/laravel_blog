@@ -21,7 +21,7 @@ class ArticleController extends Controller
     public function index(){
         $tags = Tag::all();
         $categories = Category::all();
-        return view('add_post', compact('tags'), compact('categories'));
+        return view('add_post', compact('tags','categories'));
     }
     
 
@@ -29,7 +29,7 @@ class ArticleController extends Controller
     public function show_posts(){
         $posts = Post::all();
         $users = User::all();
-        return view('post', compact('posts'), compact('users'));
+        return view('post', compact('posts','users'));
     }
     //отображение постов на начальной странице
     public function show_posts_welcome(){

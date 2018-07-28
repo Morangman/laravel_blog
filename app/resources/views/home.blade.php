@@ -29,8 +29,8 @@
                                     <p><a href="/show_post/{{ $post->id }}"><h1>{{$post->title}}  @if (Auth::user()->is_admin)<a href="/update_post/{{ $post->id }}"><span class="glyphicon glyphicon-pencil"></span></a>@endif</h1></a></p>
                                 <a href="/show_post/{{ $post->id }}"><img  src="{{$post->src}}" alt="Card image"></a>
                               <div class="card-img-overlay">
-                                <p class="card-text">{!! str_limit($post->text, 221) !!}</p>
-                                <div>
+                                  <p class="card-text">{!! str_limit($post->text, 221) !!}</p></br>
+                                <div> 
                                 @foreach ($post->tag as $tags)
                                 <form method="post" action="/show_to_tag/{{ $tags->id }}">
                                     {{ csrf_field() }}

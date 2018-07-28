@@ -24,8 +24,10 @@ Route::get('/show_to_tag/{tags}', 'TagController@show_tag_by_id')->name('show_ta
 Route::get('/show_to_category/{posts}', 'CategoryController@show_category_by_id')->name('show_category_by_id');
 
 Route::get('/show_post/{post}', 'ArticleController@show_post_by_id')->name('show_post');
+Route::post('/show_post/{post}', 'CommentController@store');
 
 Route::get('/example', 'HomeController@getUserAgentLanguage');
+
 
 
 Route::group(['middleware' => 'auth', 'middleware' => 'access:admin'], function () {
@@ -57,6 +59,7 @@ Route::group(['middleware' => 'auth', 'middleware' => 'access:admin'], function 
   Route::post('/add_categories', 'CategoryController@add_category');
   Route::get('/add_categories', 'CategoryController@show')->name('add_categories');
   Route::delete('/add_categories/{add_categories}', 'CategoryController@destroy');
+  
 
 });
 

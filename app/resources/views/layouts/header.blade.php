@@ -100,6 +100,30 @@
     background: rgb(238,238,238) linear-gradient(rgb(238,238,238), rgb(224,224,224));
     box-shadow: 0 1px 2px rgba(0,0,0,.1) inset;
   }
+  
+  .glyphicon-user{
+      font-size: 41.5px;
+      float: left;
+      margin-right: 15px;
+  }
+  .comment{
+      margin-bottom: 35px;
+  }
+  .created_at{
+      font-size: 12px;
+      font-style: italic;
+      color: #aaa;
+  }
+  
+  .comment-text{
+      clear: both;
+      margin-left: 56.5px;
+      font-size: 16px;
+      line-height: 1.3em;
+      
+  }
+  
+
 </style>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
