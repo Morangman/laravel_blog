@@ -35,18 +35,28 @@
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading"><h4><span class="glyphicon glyphicon-comment"></span>Комментарии: {{$post->comment->count()}}</h4></div>
-                            <div class="panel-body">
-                                @foreach($post->comment as $comment)
-                                <div class="comment">
+                            <div class="panel-body row">
+                                @foreach($all_comments as $comment)
+                                @if($comment[1]>0)
+                                <div class="col-xs-1">
+                                    <span>{{((count($comment[0]->parent()->get())>0)? '-&gt; #'.$comment[0]->parent()->get()->first()->id:'')}}</span>
+                                    <span>[Level {{$comment[1]}}]</span>
+                                </div>
+                                @endif
+                                @if($comment[1]===0)
+                                <div class="col-xs-12 comment">
+                                @else
+                                <div class="col-xs-{{(($comment[1]<6)? 12-$comment[1]: 6)}} col-xs-offset-{{(($comment[1]<6)? $comment[1]-1: 5)}} comment">
+                                @endif
                                     <div class="author-info">
-                                        <img src="{{"https://www.gravatar.com/avatar/" . md5( strtolower( trim( $comment->email ))) . "?s=50&d=identicon" }}" class="author-image">
+                                        <img src="{{"https://www.gravatar.com/avatar/" . md5( strtolower( trim( $comment[0]->email ))) . "?s=50&d=identicon" }}" class="author-image">
                                         <div class="author-name">
-                                            <h4>{{$comment->name}} @if(Auth::user()->is_admin)<a href="#">изменить</a> <a href="#">удалить</a>@endif</h4>
-                                            <p class="created_at">{{$comment->created_at->format('d.m.Y в H:i:s')}}</p>
+                                            <h4>{{$comment[0]->name}} @if(Auth::user()->is_admin)<a href="/edit_comment/{{$comment[0]->id}}"><span class="glyphicon glyphicon-edit"></span></a>@endif <a href="/reply_to_comment/{{$comment[0]->id}}">Ответить</a></h4>
+                                            <p class="created_at">{{$comment[0]->created_at->format('d.m.Y в H:i:s')}} </p>
                                         </div>
                                     </div>
                                     <div class="comment-text">
-                                        <p>{{$comment->comment}}</p>
+                                        <p>{{$comment[0]->comment}}</p>
                                     </div>
                                     
                                 </div>

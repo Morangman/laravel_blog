@@ -16,6 +16,7 @@ use App\Http\Requests\UpdateArticleRequest;
 
 class ArticleController extends Controller
 {
+    private $aComments;
     
     //отображение формы добавления нового поста
     public function index(){
@@ -32,10 +33,6 @@ class ArticleController extends Controller
         return view('post', compact('posts','users'));
     }
     
-    public function show_posts_comment(){
-        $posts = Post::all();
-        return view('comments', compact('posts'));
-    }
     //отображение постов на начальной странице
     public function show_posts_welcome(){
         $posts = Post::orderBy('created_at', 'desc')->get();
@@ -57,9 +54,22 @@ class ArticleController extends Controller
         return view('update_post', compact('post'), compact('categories'));
     }
     
+    private function collectComments($comments,$depth){
+        if($depth === 0){
+            $this->aComments = [];
+        }
+        foreach($comments as $c){
+            array_push($this->aComments,[$c,$depth]);
+            $this->collectComments($c->children()->get(),$depth+1);
+        }
+        
+    }
+    
     public function show_post_by_id(int $id){
         $post = Post::where('id',$id)->first();
-        return view('show_post', compact('post'));
+        $this->collectComments($post->comment()->where('parent_id',null)->get(),0);
+        $all_comments = $this->aComments;
+        return view('show_post', compact('post','all_comments'));
     }
     
     

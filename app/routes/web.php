@@ -25,7 +25,9 @@ Route::get('/show_to_category/{posts}', 'CategoryController@show_category_by_id'
 
 Route::get('/show_post/{post}', 'ArticleController@show_post_by_id')->name('show_post');
 Route::post('/show_post/{post}', 'CommentController@store');
-Route::delete('/comments/{id}', 'CommentController@destroy');
+
+Route::get('/reply_to_comment/{id}', 'CommentController@show')->name('reply_to_comment');
+Route::post('/reply_to_comment/{id}', 'CommentController@update');
 
 Route::get('/example', 'HomeController@getUserAgentLanguage');
 
@@ -60,6 +62,10 @@ Route::group(['middleware' => 'auth', 'middleware' => 'access:admin'], function 
   Route::post('/add_categories', 'CategoryController@add_category');
   Route::get('/add_categories', 'CategoryController@show')->name('add_categories');
   Route::delete('/add_categories/{add_categories}', 'CategoryController@destroy');
+  
+  Route::post('/edit_comment/{id}', 'CommentController@edit');
+  Route::get('/edit_comment/{id}', 'CommentController@create')->name('edit_comment');
+  Route::delete('/edit_comment/{id}', 'CommentController@destroy');
   
 
 });

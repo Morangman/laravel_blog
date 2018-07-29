@@ -27,7 +27,7 @@
             
             <div>
             <label>Теги: </label>
-            <select name="tags[]" class="selectpicker" multiple>
+            <select name="tags[]" class="selectpicker form-control form-control-lg" multiple>
                 @foreach ($tags as $tag)
                 <option value="{{$tag->id}}">{{$tag->name}}</option>
                 @endforeach
@@ -37,7 +37,7 @@
             
             <div>
             <label>Категории: </label>
-            <select name="category">
+            <select name="category" class="form-control form-control-lg">
                 <option value="">--выберете категорию--</option>
                 @foreach ($categories as $category)
                 <option value="{{$category->id}}">{{$category->name}}</option>

@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Добавление нового поста</title>
+	<title>Редактирование поста</title>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
