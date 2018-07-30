@@ -8,7 +8,7 @@
     body {
         font-family: "Lato", sans-serif;
     }
-    
+
     a{
         text-decoration:none !important;
     }
@@ -47,8 +47,15 @@
     
     img {
         display: block;
+        margin-left: auto;
+        margin-right: auto;
         max-width: 100%;
         height: auto;
+    }
+    
+    .post_text{
+        margin-top: 30px;
+        margin-bottom: 30px;
     }
 
     @media screen and (max-height: 450px) {
@@ -83,17 +90,17 @@
     
 
     .nav-link {
-    font-size: 11px;
-    font-weight: bold;
-    color: rgb(68,68,68);
+        font-size: 11px;
+        font-weight: bold;
+        color: rgb(68,68,68);
 
-    user-select: none;
-    padding: .2em 1.2em;
-    outline: none;
-    border: 1px solid rgba(0,0,0,.1);
-    border-radius: 2px;
-    background: rgb(245,245,245) linear-gradient(#f4f4f4, #f1f1f1);
-    transition: all .218s ease 0s;
+        user-select: none;
+        padding: .2em 1.2em;
+        outline: none;
+        border: 1px solid rgba(0,0,0,.1);
+        border-radius: 2px;
+        background: rgb(245,245,245) linear-gradient(#f4f4f4, #f1f1f1);
+        transition: all .218s ease 0s;
     }
     
     .nav-link:hover {
@@ -110,8 +117,12 @@
     }
     
     #btn_add_comment{
-        margin-top: 7px; 
-        margin-bottom: 25px;
+        width:100px; 
+        margin: -20px -50px; 
+        margin-bottom: 35px;
+        position:relative;
+        top:50%; 
+        left:50%;
     }
     
     #btn_edit_comment{
@@ -141,6 +152,7 @@
         line-height: 1.3em;
 
     }
+
 
     .glyphicon-comment{
         margin-right: 15px;

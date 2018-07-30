@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\AddCommentRequest;
 use App\Http\Requests\EditCommentRequest;
+use App\Http\Requests\ReplyRequest;
 use App\Comment;
 use App\Post;
 use Carbon\Carbon;
@@ -99,7 +100,7 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ReplyRequest $request, $id)
     {
         $parent_comment = Comment::find($id);
         $comment_id = $parent_comment->id;

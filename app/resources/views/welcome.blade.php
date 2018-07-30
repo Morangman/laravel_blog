@@ -40,6 +40,10 @@
                 position: relative;
             }
             
+            .content{
+                margin: 12px;
+            }
+            
             img {
                 width: 100%;
                 height: auto;
@@ -102,7 +106,7 @@
         </div>
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-9 col-md-offset-1">
             <div class="panel panel-default">
             <div class="content">
                 @foreach($posts as $post)
@@ -115,7 +119,7 @@
                         <p class="card-text">{!! str_limit($post->text, 221) !!}<a href="/login" >  Читать далее...</a></p>
                         @endif
                         @if (Auth::check())
-                        <p class="card-text">{!! str_limit($post->text, 221) !!}<a href="/home" >  Читать далее...</a></p>
+                        <p class="card-text">{!! str_limit($post->text, 221) !!}<a href="/show_post/{{ $post->id }}" >  Читать далее...</a></p>
                         @endif
                         <p class="card-text">Создано: {{$post->created_at->format('d.m.Y | H:i:s')}}</p>
                         <p class="card-text">Категория: {{$post->category->name}}</p>

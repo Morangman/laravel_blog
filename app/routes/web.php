@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth', 'middleware' => 'access:admin'], function 
   Route::get('/add_categories', 'CategoryController@index')->name('add_categories');
   Route::post('/add_categories', 'CategoryController@add_category');
   Route::get('/add_categories', 'CategoryController@show')->name('add_categories');
-  Route::delete('/add_categories/{add_categories}', 'CategoryController@destroy');
+  Route::delete('/add_categories/{category_id}', 'CategoryController@destroy');
   
   Route::post('/edit_comment/{id}', 'CommentController@edit');
   Route::get('/edit_comment/{id}', 'CommentController@create')->name('edit_comment');

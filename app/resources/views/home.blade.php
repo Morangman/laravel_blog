@@ -26,10 +26,13 @@
                         @foreach($posts as $post)
 
                             <div class="card bg-dark text-white">
-                                <p><a href="/show_post/{{ $post->id }}"><h1>{{$post->title}}  @if (Auth::user()->is_admin)<a href="/update_post/{{ $post->id }}"><span class="glyphicon glyphicon-pencil"></span></a>@endif</h1></a></p>
+                                <p><a href="/show_post/{{ $post->id }}"><h1>{{$post->title}}</a>  
+                                    @if (Auth::user()->is_admin)<a href="/update_post/{{ $post->id }}"><span class="glyphicon glyphicon-edit"></span></a>@endif
+                                            <div class="pull-right">{{$post->comment->count()}}  <span class="glyphicon glyphicon-comment"></span></div></h1></a></p>
+                                
                                 <a href="/show_post/{{ $post->id }}"><img  src="{{$post->src}}" alt="Card image"></a>
                                 <div class="card-img-overlay">
-                                    <p class="card-text">{!! str_limit($post->text, 221) !!}</p></br>
+                                    <p class="card-text">{!! str_limit($post->text, 221) !!}</p><hr>
                                   <div> 
                                   @foreach ($post->tag as $tags)
                                   <form method="post" action="/show_to_tag/{{ $tags->id }}">

@@ -6,6 +6,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
   <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.7/summernote.css" rel="stylesheet">
   
+  <style>
+      .btn-addpost{
+            width:100px; 
+            margin: -20px -50px; 
+            position:relative;
+            top:50%; 
+            left:50%;
+      }
+  </style>
+  
 </head>
 <body>
 <div class="row">
@@ -48,7 +58,7 @@
             
                 {{ csrf_field() }}
                 {{ method_field('POST') }}
-                <button type="submit" class="btn btn-primary form-control">Добавить</button></br>
+                <button type="submit" class="btn btn-primary btn-addpost">Добавить</button></br>
             </form></br>
 
             <p class="text-center"><a href="post" >Отмена</a></p>

@@ -52,7 +52,7 @@
                 <button type="submit" class="btn btn-primary form-control">Сохранить изменения</button></br>
             </form>
             
-            <p class="text-center"><a href="/post" >Отмена</a></p>
+            <p class="text-center"><a href="/home" >Отмена</a></p>
         </div>
      </div>
 </div>

@@ -5,12 +5,15 @@
 <div class="container">
     <div class="row">
         <div class="container">
-            <p><a href="/home">Домой</a></p>
+            <p><h4><a href="/home">Домой</a></h4></p>
             <div class="row">
                 <div class="col-md-12">
-                    <h1>{{$post->title}}</h1>
+                    <h1>{{$post->title}}</h1><hr>
                     <img  src="{{$post->src}}">
-                    <p>{!! $post->text !!}</p></br>
+                    <div class="post_text">
+                    <p>{!! $post->text !!}</p>
+                    </div><hr>
+                    
                             <div>
                             @foreach ($post->tag as $tags)
                                 <form method="post" action="/show_to_tag/{{ $tags->id }}">
@@ -51,7 +54,7 @@
                                     <div class="author-info">
                                         <img src="{{"https://www.gravatar.com/avatar/" . md5( strtolower( trim( $comment[0]->email ))) . "?s=50&d=identicon" }}" class="author-image">
                                         <div class="author-name">
-                                            <h4>{{$comment[0]->name}} @if(Auth::user()->is_admin)<a href="/edit_comment/{{$comment[0]->id}}"><span class="glyphicon glyphicon-edit"></span></a>@endif <a href="/reply_to_comment/{{$comment[0]->id}}">Ответить</a></h4>
+                                            <h4>{{$comment[0]->name}} @if(Auth::user()->is_admin)<a href="/edit_comment/{{$comment[0]->id}}">Редактировать</a>@endif <a href="/reply_to_comment/{{$comment[0]->id}}">Ответить</a></h4>
                                             <p class="created_at">{{$comment[0]->created_at->format('d.m.Y в H:i:s')}} </p>
                                         </div>
                                     </div>
@@ -69,18 +72,16 @@
         
         
         <div class="row">
-            <div id="comment-form" class="col-md-8 col-md-offset-2">
-                <div class="row">
-                    <form method="post" action="/show_post/{{$post->id}}" enctype="multipart/form-data">
+            <div id="comment-form">
+                    <form method="post" class="col-md-8 col-md-offset-2" action="/show_post/{{$post->id}}" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('POST') }}
                         
                         <label for="comment">Комментарий:</label>
                         <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
                         <p class="text-danger">{{ $errors->first('comment') }}</p></br>
-                        <button type="submit" id="btn_add_comment" class="btn btn-secondary col-md-12">Отправить</button></br>
+                        <button type="submit" id="btn_add_comment" class="btn btn-secondary">Отправить</button></br>
                     </form>
-                </div>
             </div>
         </div>
 

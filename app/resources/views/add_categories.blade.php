@@ -12,13 +12,14 @@
 
                 {{ csrf_field() }}
                 {{ method_field('POST') }}
-                <button type="submit" class="btn btn-primary form-control">Добавить</button></br>
+                <button type="submit" class="btn btn-primary form-control">Добавить</button></br>  
             </form></br>
 
             <p class="text-center"><a href="/dashboard" >Назад</a></p>
         </div>
      </div>
 </div>
+
     
 <table class="table table-hover">
   <thead>
@@ -34,7 +35,7 @@
       <td>{{$category->id}}</td>
       <td>{{$category->name}}</td>
       <td>
-            <form method="post" action="/add_tags/{{ $category->id }}">
+            <form method="post" action="/add_categories/{{ $category->id }}">
                 {{ csrf_field() }}
                 {{ method_field('DELETE') }}
 

@@ -43,6 +43,7 @@ class CategoryController extends Controller
    {
         $category = Category::find($id);
         $category->delete();
+        $category->posts()->delete();
         return redirect ('/add_categories');
    }
 }
