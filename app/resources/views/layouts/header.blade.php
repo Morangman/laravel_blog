@@ -12,6 +12,7 @@
     a{
         text-decoration:none !important;
     }
+    
     .sidenav {
         display: none;
         height: 100%;
@@ -67,9 +68,10 @@
       #go-top {right: 45%; bottom: 5px;}
     }
     
-    
-    
-    
+    @media screen and (max-width: 550px) {
+      h1 {text-align: left; font-size: 16px!important;}
+    }
+
     #go-top {
         position: fixed; 
         bottom: 25px; 
@@ -88,7 +90,6 @@
         background-color: #3d6791;
     }
     
-
     .nav-link {
         font-size: 11px;
         font-weight: bold;
@@ -109,6 +110,7 @@
       background: #f7f7f7 linear-gradient(#f7f7f7, #f1f1f1);
       box-shadow: 0 1px 2px rgba(0,0,0,.1);
     }
+    
     .nav-link:active {
       color: rgb(51,51,51);
       border: 1px solid rgb(204,204,204);
@@ -136,9 +138,11 @@
         float: left;
         margin-right: 10px;
     }
+    
     .comment{
         margin-bottom: 35px;
     }
+    
     .created_at{
         font-size: 12px;
         font-style: italic;
@@ -153,10 +157,8 @@
 
     }
 
-
     .glyphicon-comment{
         margin-right: 15px;
-        font-size: 25px;
     }
   
 
@@ -239,16 +241,16 @@
         </nav>
     </div>
 
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="/dashboard">Пользователи</a>
-  <a href="/post">Посты</a>
-  <a href="/add_post">Добавить пост</a>
-  <a href="/add_tags">Добавить тег</a>
-  <a href="/add_categories">Добавить категорию</a>
-  <a href="/rate">Курсы валют</a>
-  <a href="/home">Домой</a>
-</div>
+    <div id="mySidenav" class="sidenav">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <a href="/dashboard">Пользователи</a>
+      <a href="/post">Посты</a>
+      <a href="/add_post">Добавить пост</a>
+      <a href="/add_tags">Добавить тег</a>
+      <a href="/add_categories">Добавить категорию</a>
+      <a href="/rate">Курсы валют</a>
+      <a href="/home">Домой</a>
+    </div>
     
 @yield('content')
     
@@ -260,15 +262,15 @@
         $('div.alert').delay(3000).slideUp(300)
     </script>
     
-<script>
-    function openNav() {
-        document.getElementById("mySidenav").style.display = "block";
-    }
+    <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.display = "block";
+        }
 
-    function closeNav() {
-        document.getElementById("mySidenav").style.display = "none";
-    }
-</script>
+        function closeNav() {
+            document.getElementById("mySidenav").style.display = "none";
+        }
+    </script>
 
         <script>
             $(document).ready(function(){

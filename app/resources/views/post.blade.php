@@ -17,8 +17,8 @@
         
         <div class="panel panel-primary">
           <div class="panel-heading">Посты</div>
-          <div class="panel-body">
-              <div class="table-responsive">
+            <div class="panel-body">
+                <div class="table-responsive">
                     <table class="table table-bordered">
                     <thead>
                       <tr>
@@ -37,7 +37,6 @@
                     </thead>
                     <tbody>
                         @foreach ($posts as $post)
-
                             <tr>
                                 <td>{{ $post->id }}</td>
                                 <td>{{ $post->user->name}}</td>
@@ -61,7 +60,7 @@
                                 </form>
                                 </td>
                                 
-                                  <td>
+                                <td>
                                     <form method="post" action="/post/{{ $post->id }}">
                                       {{ csrf_field() }}
                                       {{ method_field('DELETE') }}
@@ -70,14 +69,13 @@
                                         <i class="fa fa-btn fa-trash"></i>Удалить
                                       </button>
                                     </form>
-                                  </td>
+                                </td>
                             </tr>
-
                         @endforeach
                     </tbody>
                   </table>
-              </div>
-          </div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -19,14 +19,4 @@ class AdminController extends Controller
             return view('home');
         } 
     }
-    
-    public function admin_post()
-    {
-        if(\Auth::user()->is_admin == 1){
-            return view('post');
-        } 
-        if(\Auth::user()->is_admin !== 1){
-            return view('home');
-        } 
-    }
 }

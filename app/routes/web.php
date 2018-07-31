@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth', 'middleware' => 'access:admin'], function 
   Route::delete('/dashboard/{user}', 'UserController@destroy');
   Route::post('/update/{user}', 'UserController@update_info');
   
-  Route::get('/post', 'AdminController@admin_post')->name('post');
+
   Route::get('/add_post', 'ArticleController@index')->name('add_post');
 
   Route::get('/post', 'ArticleController@show_posts')->name('post');

@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>{{$post->title}}</h1><hr>
-                    <img  src="{{$post->src}}">
+                    <a  href="{{ $post->src }}" target="_blank"><img  src="{{$post->src}}"></a>
                     <div class="post_text">
                     <p>{!! $post->text !!}</p>
                     </div><hr>
@@ -31,8 +31,6 @@
                 </div>
             </div>
         </div>
-        
-        
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -61,31 +59,28 @@
                                     <div class="comment-text">
                                         <p>{{$comment[0]->comment}}</p>
                                     </div>
-                                    
                                 </div>
                                 @endforeach
+                                </div>
                             </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        
-        <div class="row">
-            <div id="comment-form">
-                    <form method="post" class="col-md-8 col-md-offset-2" action="/show_post/{{$post->id}}" enctype="multipart/form-data">
-                        {{ csrf_field() }}
-                        {{ method_field('POST') }}
-                        
-                        <label for="comment">Комментарий:</label>
-                        <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
-                        <p class="text-danger">{{ $errors->first('comment') }}</p></br>
-                        <button type="submit" id="btn_add_comment" class="btn btn-secondary">Отправить</button></br>
-                    </form>
-            </div>
-        </div>
+            <div class="row">
+                <div id="comment-form">
+                        <form method="post" class="col-md-8 col-md-offset-2" action="/show_post/{{$post->id}}" enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            {{ method_field('POST') }}
 
-    </div> 
+                            <label for="comment">Комментарий:</label>
+                            <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
+                            <p class="text-danger">{{ $errors->first('comment') }}</p></br>
+                            <button type="submit" id="btn_add_comment" class="btn btn-secondary">Отправить</button></br>
+                        </form>
+                </div>
+            </div>
+        </div> 
+    </div>
 </div>
 
 @endsection
