@@ -1,7 +1,6 @@
 @extends('layouts.header')
 
 @section('content')
-
 <div class="container">
     <div class="row">
         <div class="container">
@@ -13,24 +12,28 @@
                     <div class="post_text">
                     <p>{!! $post->text !!}</p>
                     </div><hr>
-                    
-                            <div>
-                            @foreach ($post->tag as $tags)
-                                <form method="post" action="/show_to_tag/{{ $tags->id }}">
-                                    {{ csrf_field() }}
-                                    {{ method_field('GET') }}
-                                    <ul style="float: left; margin-left: 0;  padding-left: 5px;">
-                                        <li style="float: right; list-style-type: none; "><button type="submit" class="btn btn-secondary btn-xs">#{{$tags->name}}</button></li>
-                                    </ul>
-                                </form>
-                            @endforeach
-                            </div></br></br>
-                        <p>Создано: {{$post->created_at->format('d.m.Y | H:i:s')}}</p>
-                        <p class="card-text">Категория: <a href="/show_to_category/{{$post->category->id}}">{{$post->category->name}}</a></p>
-                        <p>Автор: {{$post->user->name}}</p></br>
+                    <div>
+                    @foreach ($post->tag as $tags)
+                        <form method="post" action="/show_to_tag/{{ $tags->id }}">
+                            {{ csrf_field() }}
+                            {{ method_field('GET') }}
+                            <ul style="float: left; margin-left: 0;  padding-left: 5px;">
+                                <li style="float: right; list-style-type: none; "><button type="submit" class="btn btn-secondary btn-xs">#{{$tags->name}}</button></li>
+                            </ul>
+                        </form>
+                    @endforeach
+                    </div></br></br>
+                    <p>Создано: {{$post->created_at->format('d.m.Y | H:i:s')}}</p>
+                    <p class="card-text">Категория: <a href="/show_to_category/{{$post->category->id}}">{{$post->category->name}}</a></p>
+                    <p>Автор: {{$post->user->name}}</p>
+                    <div class="likes">
+                        <p><strong>{{count($post->user->likes())}}</strong><button class="like button-main"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                        <strong></strong><button class="like button-main"><span class="glyphicon glyphicon-thumbs-down"></span></button></p>
+                    </div></br>
                 </div>
             </div>
         </div>
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -83,5 +86,11 @@
     </div>
 </div>
 
+<script>
+    var token = '{{ Session::token() }}';
+    var postId = '{{$post->id}}';
+    var urlLike = '{{ route('like') }}';
+</script>
+    
 @endsection
 

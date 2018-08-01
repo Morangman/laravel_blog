@@ -24,6 +24,7 @@ Route::get('/show_to_tag/{tags}', 'TagController@show_tag_by_id')->name('show_ta
 Route::get('/show_to_category/{posts}', 'CategoryController@show_category_by_id')->name('show_category_by_id');
 
 Route::get('/show_post/{post}', 'ArticleController@show_post_by_id')->name('show_post');
+Route::post('/like', [ 'uses' => 'ArticleController@postLikePost', 'as' => 'like']);
 Route::post('/show_post/{post}', 'CommentController@store');
 
 Route::get('/reply_to_comment/{id}', 'CommentController@show')->name('reply_to_comment');

@@ -58,6 +58,42 @@
         margin-top: 30px;
         margin-bottom: 30px;
     }
+    
+    .likes{
+        font-size: 20px;
+        background: rgba(38,41,58,.04);
+        width: auto;
+        text-align: center;
+        border-radius: 5px;
+    }
+    
+    .glyphicon-thumbs-up{
+        color: green;
+        margin-left: 3px;
+    }
+    
+    .button-main {
+        background: rgba(38,41,58,.04);
+        outline: none!important;
+        margin-left: 5px;
+    }
+    
+    
+
+    
+    
+    .glyphicon-thumbs-up:hover {
+        color: #044;
+    }
+    
+    .glyphicon-thumbs-down{
+        color: red;
+        margin-left: 3px;  
+    }
+    
+    .glyphicon-thumbs-down:hover {
+        color: #C21F39;
+    }
 
     @media screen and (max-height: 450px) {
       .sidenav {padding-top: 15px;}
@@ -296,6 +332,18 @@
              $("#go-top").scrollToTop();
             });
         </script>
-    
+        
+<script>
+    $('.like').on('click', function(event) {
+        event.preventDefault();
+        var isLike = event.target.previousElementSibling == null;
+        $.ajax({
+            method: 'POST',
+            url: urlLike,
+            data: {isLike: isLike, postId: postId, _token: token}
+        });
+    });
+</script>
+        
 </body>
 </html>

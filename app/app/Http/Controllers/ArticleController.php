@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\User;
 use App\Tag;
+use App\Like;
 use App\Category;
 use File;
 use Carbon\Carbon;
@@ -130,4 +131,37 @@ class ArticleController extends Controller
         \Session::flash('delete_post_message', 'Пост был успешно удален!');
         return redirect ('/post');
    }
+   
+    public function postLikePost(Request $request)
+    {
+        $post_id = $request['postId'];
+        $is_like = $request['isLike'] === 'true';
+        $update = false;
+        $post = Post::find($post_id);
+        if (!$post) {
+            return null;
+        }
+        $user = \Auth::user();
+        $like = $user->likes()->where('post_id', $post_id)->first();
+        if ($like) {
+            $already_like = $like->like;
+            $update = true;
+            if ($already_like == $is_like) {
+                $like->delete();
+                return null;
+            }
+        } else {
+            $like = new Like();
+        }
+        $like->like = $is_like;
+        $like->user_id = $user->id;
+        $like->post_id = $post->id;
+        
+        if ($update) {
+            $like->update();
+        } else {
+            $like->save();
+        }
+        return null;
+    }
 }
