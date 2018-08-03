@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Like extends Model
+class Dislike extends Model
 {
-    protected $fillable = ['like'];
+    protected $fillable = ['dislike'];
     
     public function post(){
         

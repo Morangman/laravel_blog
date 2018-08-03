@@ -3,7 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/add_post.blade.php</file>
+            <file>file:/C:/Users/User/Desktop/laravel_blog/app/routes/web.php</file>
+            <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/layouts/header.blade.php</file>
+            <file>file:/C:/Users/User/Desktop/laravel_blog/app/app/Http/Controllers/ArticleController.php</file>
+            <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/add_tags.blade.php</file>
+            <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/show_post.blade.php</file>
         </group>
     </open-files>
 </project-private>

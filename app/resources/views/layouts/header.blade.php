@@ -66,21 +66,17 @@
         text-align: center;
         border-radius: 5px;
     }
-    
-    .glyphicon-thumbs-up{
-        color: green;
-        margin-left: 3px;
-    }
-    
+   
     .button-main {
         background: rgba(38,41,58,.04);
         outline: none!important;
         margin-left: 5px;
     }
     
-    
-
-    
+    .glyphicon-thumbs-up{
+        color: green;
+        margin-left: 3px;
+    }
     
     .glyphicon-thumbs-up:hover {
         color: #044;
@@ -341,6 +337,18 @@
             method: 'POST',
             url: urlLike,
             data: {isLike: isLike, postId: postId, _token: token}
+        });
+    });
+</script>
+
+<script>
+    $('.dislike').on('click', function(event) {
+        event.preventDefault();
+        var isDisLike = event.target.previousElementSibling == null;
+        $.ajax({
+            method: 'POST',
+            url: urlDisLike,
+            data: {isDisLike: isDisLike, postId: postId, _token: token}
         });
     });
 </script>

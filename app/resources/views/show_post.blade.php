@@ -27,8 +27,8 @@
                     <p class="card-text">Категория: <a href="/show_to_category/{{$post->category->id}}">{{$post->category->name}}</a></p>
                     <p>Автор: {{$post->user->name}}</p>
                     <div class="likes">
-                        <p><strong>{{count($post->user->likes())}}</strong><button class="like button-main"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-                        <strong></strong><button class="like button-main"><span class="glyphicon glyphicon-thumbs-down"></span></button></p>
+                        <p><strong>{{$post->likes->sum('like')}}</strong><button class="like button-main"><span class="glyphicon glyphicon-thumbs-up"></span></button>
+                        <button class="dislike button-main"><span class="glyphicon glyphicon-thumbs-down"></span></button> <strong>{{$post->dislikes->sum('dislike')}}</strong></p>
                     </div></br>
                 </div>
             </div>
@@ -90,6 +90,7 @@
     var token = '{{ Session::token() }}';
     var postId = '{{$post->id}}';
     var urlLike = '{{ route('like') }}';
+    var urlDisLike = '{{ route('dislike') }}';
 </script>
     
 @endsection

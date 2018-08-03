@@ -7,6 +7,7 @@ use App\Post;
 use App\User;
 use App\Tag;
 use App\Like;
+use App\Dislike;
 use App\Category;
 use File;
 use Carbon\Carbon;
@@ -143,12 +144,17 @@ class ArticleController extends Controller
         }
         $user = \Auth::user();
         $like = $user->likes()->where('post_id', $post_id)->first();
+        $dislike = $user->dislikes()->where('post_id', $post_id)->first();
         if ($like) {
             $already_like = $like->like;
+            $already_dis_like = $dislike->dislike;
             $update = true;
             if ($already_like == $is_like) {
                 $like->delete();
                 return null;
+            }
+            if ($already_dis_like == true) {
+                $dislike->delete();
             }
         } else {
             $like = new Like();
@@ -161,6 +167,44 @@ class ArticleController extends Controller
             $like->update();
         } else {
             $like->save();
+        }
+        return null;
+    }
+    
+    public function postDisLikePost(Request $request)
+    {
+        $post_id = $request['postId'];
+        $is_dis_like = $request['isDisLike'] === 'true';
+        $update = false;
+        $post = Post::find($post_id);
+        if (!$post) {
+            return null;
+        }
+        $user = \Auth::user();
+        $dislike = $user->dislikes()->where('post_id', $post_id)->first();
+        $like = $user->likes()->where('post_id', $post_id)->first();
+        if ($dislike) {
+            $already_dis_like = $dislike->dislike;
+            $already_like = $like->like;
+            $update = true;
+            if ($already_dis_like == $is_dis_like) {
+                $dislike->delete();
+                return null;
+            }
+            if ($already_like == true) {
+                $like->delete();
+            }
+        } else {
+            $dislike = new Dislike();
+        }
+        $dislike->dislike = $is_dis_like;
+        $dislike->user_id = $user->id;
+        $dislike->post_id = $post->id;
+        
+        if ($update) {
+            $dislike->update();
+        } else {
+            $dislike->save();
         }
         return null;
     }
