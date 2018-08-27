@@ -8,6 +8,14 @@
     body {
         font-family: "Lato", sans-serif;
     }
+    
+    .nav h4{
+        color: white;
+        font-weight: bold;
+        font-family: sans-serif;
+        text-align: center;
+        text-shadow: blue 0 0 2px;
+    }
 
     a{
         text-decoration:none !important;
@@ -46,10 +54,11 @@
         margin-left: 50px;
     }
     
-    img {
+    .img-home, .img-show-post {
         display: block;
         margin-left: auto;
         margin-right: auto;
+        border-radius: 2%;
         max-width: 100%;
         height: auto;
     }
@@ -90,6 +99,10 @@
     .glyphicon-thumbs-down:hover {
         color: #C21F39;
     }
+    
+    .glyphicon-heart{
+        margin-right: 7px; 
+    }
 
     @media screen and (max-height: 450px) {
       .sidenav {padding-top: 15px;}
@@ -100,8 +113,19 @@
       #go-top {right: 45%; bottom: 5px;}
     }
     
-    @media screen and (max-width: 550px) {
-      h1 {text-align: left; font-size: 16px!important;}
+    @media screen and (max-width: 880px) {
+      h1 {text-align: left; font-size: 20px!important;}
+    }
+    
+    @media screen and (max-width: 880px) {
+      .comment-text {font-size: 12px!important;}
+      .author-image {width:  30px!important; height: 30px!important;}
+      h4 {font-size: 12px!important;}
+      .created_at {font-size: 9px!important}
+      .level {display: none}
+      .c-level {display: none}
+      .comment{margin-bottom: 0px!important;}
+      #comment-form {margin-left: 15px; margin-right: 15px!important;}
     }
 
     #go-top {
@@ -126,7 +150,6 @@
         font-size: 11px;
         font-weight: bold;
         color: rgb(68,68,68);
-
         user-select: none;
         padding: .2em 1.2em;
         outline: none;
@@ -192,7 +215,34 @@
     .glyphicon-comment{
         margin-right: 15px;
     }
-  
+    
+    button[disabled='disabled'] {
+        background-color: grey;
+    }
+    
+    .posts-pagination{
+        text-align: center;
+    }
+    
+    .user-info{
+       width: 120px;
+       margin-top: 30px;
+       margin-left: 20px;
+    }
+    
+    .user-photo{
+        width: 70px;
+        height: 70px;
+        border-radius: 10%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .add_photo{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
 
 </style>
     <!-- CSRF Token -->
@@ -253,6 +303,7 @@
                                         @if (Auth::user()->is_admin)
                                           <a href="{{ url('/dashboard') }}">Dashboard</a>
                                         @endif
+                                        <a href="{{ url('/personal') }}">Личный кабинет</a>
                                         <a href="{{ url('/home') }}">Домой</a>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -330,27 +381,57 @@
         </script>
         
 <script>
-    $('.like').on('click', function(event) {
+    var $container = $('button.like')
+            .parent().parent();
+    
+    var fDone = function(data){
+        var jdata = JSON.parse(data);
+        if (jdata.status === 'error'){
+            var $elem_container = $("<div></div>");
+            var $elem = $("<div></div>");
+            $elem_container.addClass("col-sm-12");
+            $elem.addClass("alert alert-danger");
+            $elem.text(jdata.msg);
+            $elem_container.append($elem);
+            $container.append($elem_container);
+            $elem_container.delay(3000).slideUp(300); 
+        }
+        if (jdata.status === 'ok'){
+            $container.find("strong.likes-cnt")
+                    .text(jdata.likes.toString());
+            $container.find("strong.dislikes-cnt")
+                    .text(jdata.dislikes.toString());
+        }
+    };
+    
+    var fOnClick = function(event){
         event.preventDefault();
-        var isLike = event.target.previousElementSibling == null;
-        $.ajax({
-            method: 'POST',
-            url: urlLike,
-            data: {isLike: isLike, postId: postId, _token: token}
-        });
-    });
-</script>
+        $container.find("button").attr('disabled','disabled');
+        setTimeout(function(){
+            var oPostData = {
+                postId: postId,
+                _token: token
+            };
+            var cUrl = urlLike;
+            if ($(event.target).parent().hasClass('dislike')){
+                cUrl = urlDisLike;
+            }
+            $.ajax({
+                method: 'POST',
+                url: cUrl,
+                data: oPostData,
+                success: fDone,
+                complete : function(){
+                    $container.find("button").removeAttr('disabled');
+                }
+            });
+        }, 1000);
+        return false;
+    };
+    
+    $('.like').on('click', fOnClick);
 
-<script>
-    $('.dislike').on('click', function(event) {
-        event.preventDefault();
-        var isDisLike = event.target.previousElementSibling == null;
-        $.ajax({
-            method: 'POST',
-            url: urlDisLike,
-            data: {isDisLike: isDisLike, postId: postId, _token: token}
-        });
-    });
+    $('.dislike').on('click', fOnClick);
 </script>
         
 </body>

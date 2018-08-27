@@ -100,6 +100,11 @@
             .post-info{
                 margin-bottom: 50px;
             }
+            
+            .posts-pagination{
+                text-align: center;
+            }
+            
         </style>
     </head>
     <body>
@@ -138,6 +143,7 @@
                               </div>
                             </div></br>
                         @endforeach
+                        <div class="posts-pagination">{{$posts->render()}}</div>
                     </div>
                     </div>
                 </div>

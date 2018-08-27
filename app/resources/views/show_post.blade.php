@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <h1>{{$post->title}}</h1><hr>
-                    <a  href="{{ $post->src }}" target="_blank"><img  src="{{$post->src}}"></a>
+                    <a  href="{{ $post->src }}" target="_blank"><img  src="{{$post->src}}" class="img-show-post"></a>
                     <div class="post_text">
                     <p>{!! $post->text !!}</p>
                     </div><hr>
@@ -27,8 +27,16 @@
                     <p class="card-text">Категория: <a href="/show_to_category/{{$post->category->id}}">{{$post->category->name}}</a></p>
                     <p>Автор: {{$post->user->name}}</p>
                     <div class="likes">
-                        <p><strong>{{$post->likes->sum('like')}}</strong><button class="like button-main"><span class="glyphicon glyphicon-thumbs-up"></span></button>
-                        <button class="dislike button-main"><span class="glyphicon glyphicon-thumbs-down"></span></button> <strong>{{$post->dislikes->sum('dislike')}}</strong></p>
+                        <div class="row">
+                            <strong class="likes-cnt">{{$post->likes->sum('like')}}</strong>
+                            <button class="like button-main">
+                                <span class="glyphicon glyphicon-thumbs-up"></span>
+                            </button>
+                            <button class="dislike button-main">
+                                <span class="glyphicon glyphicon-thumbs-down"></span>
+                            </button> 
+                            <strong class="dislikes-cnt">{{count($post->likes->where('like', null))}}</strong>
+                        </div>
                     </div></br>
                 </div>
             </div>
@@ -43,8 +51,8 @@
                                 @foreach($all_comments as $comment)
                                 @if($comment[1]>0)
                                 <div class="col-xs-1">
-                                    <span>{{((count($comment[0]->parent()->get())>0)? '-&gt; #'.$comment[0]->parent()->get()->first()->id:'')}}</span>
-                                    <span>[Level {{$comment[1]}}]</span>
+                                    <span class="level">{{((count($comment[0]->parent()->get())>0)? '-&gt; #'.$comment[0]->parent()->get()->first()->id:'')}}</span>
+                                    <span class="c-level">[Level {{$comment[1]}}]</span>
                                 </div>
                                 @endif
                                 @if($comment[1]===0)
@@ -75,7 +83,7 @@
                             {{ csrf_field() }}
                             {{ method_field('POST') }}
 
-                            <label for="comment">Комментарий:</label>
+                            <label for="comment" class="commet-lable">Комментарий:</label>
                             <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
                             <p class="text-danger">{{ $errors->first('comment') }}</p></br>
                             <button type="submit" id="btn_add_comment" class="btn btn-secondary">Отправить</button></br>

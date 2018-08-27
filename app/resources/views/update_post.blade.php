@@ -12,7 +12,7 @@
         <div class="col-lg-10 col-lg-offset-1">
             <div class="panel panel-primary">
                 <div class="panel-heading">Редактирование поста</div></br>
-                <form method="post" action="/update_post/{{ $post->id }}">
+                <form method="post" enctype="multipart/form-data" action="/update_post/{{ $post->id }}">
                     <label>Заголовок: </label>
                     <input type="text" name="title" class="form-control"  value="{{$post->title}}">
                     <p class="text-danger">{{ $errors->first('title') }}</p></br>
@@ -25,16 +25,17 @@
                     <input type="file" name="image">
                     <p class="text-danger">{{ $errors->first('image') }}</p></br>
 
-                    <div>
+                    <div class="all-tags">
                     <label>Теги: </label>
                     <select name="tags[]" class="selectpicker" multiple>
-                        @foreach ($post->tag as $tags)
-                        <option value="{{$tags->id}}">{{$tags->name}}</option>
+                        @foreach ($tags as $tag)
+                        <option value="{{$tag->id}}">{{$tag->name}}</option>
                         @endforeach
                     </select>
-                    </div></br>
+                    </div>
+                    <p class="text-danger">{{ $errors->first('tags') }}</p></br>
 
-                    <div>
+                    <div class="all-categories">
                     <label>Категории: </label>
                     <select name="category">
                         <option value="">--выберете категорию--</option>
@@ -42,8 +43,7 @@
                         <option value="{{$category->id}}">{{$category->name}}</option>
                         @endforeach
                     </select>
-                    <p class="text-danger">{{ $errors->first('category') }}</p></br>
-                    </div></br>
+                    </div><p class="text-danger">{{ $errors->first('category') }}</p></br>
 
                         {{ csrf_field() }}
                         {{ method_field('POST') }}

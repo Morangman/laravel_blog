@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\AddArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ArticleController extends Controller
 {
@@ -37,13 +39,13 @@ class ArticleController extends Controller
     
     //отображение постов на начальной странице
     public function show_posts_welcome(){
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
         return view('/welcome', compact('posts'));
     }
     
         //отображение постов на домашней странице
     public function show_posts_home() {
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::orderBy('created_at', 'desc')->paginate(5);
         $tags = Tag::all();
         $categories = Category::all();
         return view('/home', compact('posts', 'tags', 'categories')); 
@@ -53,7 +55,8 @@ class ArticleController extends Controller
     public function show_info(int $id){
         $post = Post::where('id',$id)->first();
         $categories = Category::all();
-        return view('update_post', compact('post'), compact('categories'));
+        $tags = Tag::all();
+        return view('update_post', compact('post', 'categories', 'tags'));
     }
     
     private function collectComments($comments,$depth){
@@ -76,18 +79,24 @@ class ArticleController extends Controller
     
     
     //импорт данных в таблицу с новыми параметрами
-    public function update_info(int $id, Request $request){
+    public function update_info(int $id, UpdateArticleRequest $request){
         $post = Post::where('id',$id)->first();
         $post->title = $request->input('title');
         $post->text = $request->input('text');
         if($request->hasFile('image')){
+            $oldFile = $post->src;
+            unlink(public_path().$oldFile);
             $file = $request->file('image');
             $file_name = md5_file($file).'.'.$file->getClientOriginalExtension();
             $file->move(public_path() . '/img', $file_name);
             $post->src = str_replace("\\", "/", '\img'.'\\'. $file_name);
-            $oldImage = $post->src;
-            Storage::delete($oldImage);
-            $post->save();
+        }
+        $post->category_id = $request->input('category');
+        $tags = $request->input('tags', []);
+        if (isset ($request->tags)){
+            $post->tag()->sync($tags, true);
+        }else{
+            $post->tag()->sync(array());
         }
         $post->updated_at = Carbon::now();
         $post->save();
@@ -128,84 +137,78 @@ class ArticleController extends Controller
    public function destroy($id)
    {
         $post = Post::find($id);
+        $image = $post->src;
+        $result = public_path().$image;
+        $file = fopen($result, "w");
+        fclose($file);
+        unlink(public_path().$image);
         $post->delete();
         \Session::flash('delete_post_message', 'Пост был успешно удален!');
         return redirect ('/post');
    }
    
-    public function postLikePost(Request $request)
+    private function postLikeDislikePost(Request $request, bool $is_like)
     {
         $post_id = $request['postId'];
-        $is_like = $request['isLike'] === 'true';
-        $update = false;
         $post = Post::find($post_id);
         if (!$post) {
-            return null;
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'Post not found'
+                ]);
         }
         $user = \Auth::user();
-        $like = $user->likes()->where('post_id', $post_id)->first();
-        $dislike = $user->dislikes()->where('post_id', $post_id)->first();
-        if ($like) {
-            $already_like = $like->like;
-            $already_dis_like = $dislike->dislike;
-            $update = true;
-            if ($already_like == $is_like) {
-                $like->delete();
-                return null;
-            }
-            if ($already_dis_like == true) {
-                $dislike->delete();
+        $like_record = $user->likes()
+                ->where('post_id', $post_id)
+                ->where('like', (($is_like)? 1:0))
+                ->first();
+        if ($like_record) {
+            if(!$like_record->delete()){
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'Fail to delete'
+                ]);
+            } else {
+                return json_encode([
+                    'status' => 'ok',
+                    'msg' => (($is_like)? "Лайк":"Дизлайк").' удален',
+                    'likes' => $post->likes->sum('like'),
+                    'dislikes' => $post->likes->where('like',0)->count()
+                ]);
             }
         } else {
-            $like = new Like();
-        }
-        $like->like = $is_like;
-        $like->user_id = $user->id;
-        $like->post_id = $post->id;
-        
-        if ($update) {
-            $like->update();
-        } else {
-            $like->save();
-        }
-        return null;
+            $not_like = $user->likes()
+                    ->where('post_id', $post_id)
+                    ->where('like', (($is_like)? 0:1))
+                    ->first();
+            if ($not_like){
+                $not_like->like = (($is_like)? 1:0);
+                $not_like->update();
+            } else {
+                $new_like = new Like();
+                $new_like->like = (($is_like)? 1:0);
+                $new_like->user_id = $user->id;
+                $new_like->post_id = $post->id;
+                $new_like->save();
+            }
+
+            return json_encode([
+                'status' => 'ok',
+                'msg' => (($is_like)? "Лайк":"Дизлайк").' учтен',
+                'likes' => $post->likes->sum('like'),
+                'dislikes' => $post->likes->where('like',0)->count()
+            ]);
+        } 
+
     }
     
-    public function postDisLikePost(Request $request)
+    public function postLikePost(Request $request)
     {
-        $post_id = $request['postId'];
-        $is_dis_like = $request['isDisLike'] === 'true';
-        $update = false;
-        $post = Post::find($post_id);
-        if (!$post) {
-            return null;
-        }
-        $user = \Auth::user();
-        $dislike = $user->dislikes()->where('post_id', $post_id)->first();
-        $like = $user->likes()->where('post_id', $post_id)->first();
-        if ($dislike) {
-            $already_dis_like = $dislike->dislike;
-            $already_like = $like->like;
-            $update = true;
-            if ($already_dis_like == $is_dis_like) {
-                $dislike->delete();
-                return null;
-            }
-            if ($already_like == true) {
-                $like->delete();
-            }
-        } else {
-            $dislike = new Dislike();
-        }
-        $dislike->dislike = $is_dis_like;
-        $dislike->user_id = $user->id;
-        $dislike->post_id = $post->id;
-        
-        if ($update) {
-            $dislike->update();
-        } else {
-            $dislike->save();
-        }
-        return null;
+        return $this->postLikeDislikePost($request, true);
+    }
+
+    public function postDislikePost(Request $request)
+    {
+        return $this->postLikeDislikePost($request, false);
     }
 }

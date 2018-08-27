@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth;
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -39,16 +40,28 @@ class HomeController extends Controller
         foreach($user_pref_langs as $idx => $lang) {
             $lang = substr($lang, 0, 2);
             if ($lang == 'ru') {
-                echo "Предпочтительный язык - ru";
+                echo "Предпочтительный язык - ru"."</br></br>";
                 break;
             } 
             if($lang == 'en')
             {
-                echo "Предпочтительный язык - en";
+                echo "Предпочтительный язык - en"."</br></br>";
                 break;
             }
         }
-
+        
+        $a = [
+            [
+                "clientId"=>true,
+                 "client"=>true,
+            ]
+        ];
+        
+        if($a[0]['clientId'] || $a[0]['client']){
+            echo "true"."</br></br>";
+        }
+        
+        echo (\Auth::user()->id);
     }
     
 

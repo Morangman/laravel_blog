@@ -5,8 +5,9 @@
         <group>
             <file>file:/C:/Users/User/Desktop/laravel_blog/app/routes/web.php</file>
             <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/layouts/header.blade.php</file>
-            <file>file:/C:/Users/User/Desktop/laravel_blog/app/app/Http/Controllers/ArticleController.php</file>
-            <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/add_tags.blade.php</file>
+            <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/home.blade.php</file>
+            <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/personal.blade.php</file>
+            <file>file:/C:/Users/User/Desktop/laravel_blog/app/app/Http/Controllers/PersonalController.php</file>
             <file>file:/C:/Users/User/Desktop/laravel_blog/app/resources/views/show_post.blade.php</file>
         </group>
     </open-files>

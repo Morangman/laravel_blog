@@ -26,9 +26,10 @@
                             <div class="card bg-dark text-white">
                                 <p><a href="/show_post/{{ $post->id }}"><h1>{{$post->title}}</a>  
                                     @if (Auth::user()->is_admin)<a href="/update_post/{{ $post->id }}"><span class="glyphicon glyphicon-edit"></span></a>@endif
-                                            <div class="pull-right">{{$post->comment->count()}}  <span class="glyphicon glyphicon-comment"></span></div></h1></a></p>
+                                            <div class="pull-right">{{$post->comment->count()}} <span class="glyphicon glyphicon-comment"></span></div>
+                                            <div class="pull-right">{{$post->likes->sum('like')}}<span class="glyphicon glyphicon-heart"></span></div></h1></a></p>
                                 
-                                <a href="/show_post/{{ $post->id }}"><img  src="{{$post->src}}" alt="Card image"></a>
+                                <a href="/show_post/{{ $post->id }}"><img  src="{{$post->src}}" class="img-home"></a>
                                 <div class="card-img-overlay">
                                     <p class="card-text">{!! str_limit($post->text, 221) !!}</p><hr>
                                     <div> 
@@ -48,6 +49,7 @@
                                 </div>
                             </div></br>
                         @endforeach
+                        <div class="posts-pagination">{{$posts->render()}}</div>
                     </div>
                 </div>
             </div>

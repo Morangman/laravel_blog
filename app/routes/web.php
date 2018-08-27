@@ -25,13 +25,15 @@ Route::get('/show_to_category/{posts}', 'CategoryController@show_category_by_id'
 
 Route::get('/show_post/{post}', 'ArticleController@show_post_by_id')->name('show_post');
 Route::post('/like', [ 'uses' => 'ArticleController@postLikePost', 'as' => 'like']);
-Route::post('/dislike', [ 'uses' => 'ArticleController@postDisLikePost', 'as' => 'dislike']);
+Route::post('/dislike', [ 'uses' => 'ArticleController@postDislikePost', 'as' => 'dislike']);
 Route::post('/show_post/{post}', 'CommentController@store');
 
 Route::get('/reply_to_comment/{id}', 'CommentController@show')->name('reply_to_comment');
 Route::post('/reply_to_comment/{id}', 'CommentController@update');
 
 Route::get('/example', 'HomeController@getUserAgentLanguage');
+
+Route::get('/personal', 'PersonalController@index')->name('personal');
 
 
 
