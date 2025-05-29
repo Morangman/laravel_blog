@@ -1,9 +1,3 @@
 site_name: Laravel Project Documentation
 theme:
   name: material
-
-nav:
-  - Главная: index.md
-  - Установка: install.md
-  - Структура: structure.md
-  - API: api.md
